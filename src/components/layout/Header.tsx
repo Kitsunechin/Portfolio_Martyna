@@ -5,7 +5,7 @@ const Header = () => {
   const location = useLocation();
   
   return (
-    <header className="py-6 px-6 md:px-10 w-full flex justify-between items-center bg-gray-900">
+    <header className="py-6 px-6 md:px-10 w-full flex justify-between items-center backdrop-blur-xl bg-black/30 border-b border-white/10 sticky top-0 z-50">
       <Link to="/" className="font-medium text-lg text-white">Martyna Bulska</Link>
       <nav className="flex items-center gap-6">
         <Link 

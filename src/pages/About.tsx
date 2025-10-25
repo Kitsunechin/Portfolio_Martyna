@@ -1,38 +1,15 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Bubble from "@/components/ui/Bubble";
+import ShaderBackground from "@/components/ui/ShaderBackground";
 
 const About = () => {
   return (
     <>
       <Header />
-      
-      <main className="min-h-screen bg-[rgb(17,24,39)] relative">
+      <ShaderBackground />
+
+      <main className="min-h-screen text-white relative">
         <section className="py-20 px-6 md:px-10 flex flex-col md:flex-row gap-[100px] items-center justify-center max-w-7xl mx-auto relative">
-          <Bubble
-            color="yellow"
-            size="xl"
-            className="top-[5%] right-[2%] opacity-40"
-            animation="float"
-          />
-          <Bubble
-            color="green"
-            size="lg"
-            className="top-[20%] left-[1%] opacity-60"
-            animation="float-alt"
-          />
-          <Bubble
-            color="yellow"
-            size="md"
-            className="bottom-[10%] right-[8%] opacity-40"
-            animation="float-alt"
-          />
-          <Bubble
-            color="green"
-            size="sm"
-            className="bottom-[30%] left-[2%] opacity-60"
-            animation="float"
-          />
           <div className="relative flex justify-center z-20">
             <div className="rounded-full overflow-hidden aspect-square w-72 md:w-96 relative animate-float">
               <img
@@ -61,45 +38,27 @@ const About = () => {
           </div>
         </section>
         
-        <section className="py-16 px-6 md:px-10 bg-gray-900 relative">
-          <Bubble
-            color="green"
-            size="lg"
-            className="top-[5%] left-[2%] opacity-40"
-            animation="float"
-          />
-          <Bubble
-            color="yellow"
-            size="md"
-            className="bottom-[10%] right-[3%] opacity-60"
-            animation="float-alt"
-          />
-          <Bubble
-            color="green"
-            size="sm"
-            className="top-[50%] right-[1%] opacity-40"
-            animation="float-alt"
-          />
-          <h2 className="text-3xl font-semibold mb-8 text-white relative z-20">My approach to design</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 relative z-20">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-sm">
+        <section className="py-16 px-6 md:px-10 relative">
+          <h2 className="text-3xl font-semibold mb-8 text-white relative z-20 max-w-7xl mx-auto">My approach to design</h2>
+
+          <div className="grid md:grid-cols-3 gap-8 relative z-20 max-w-7xl mx-auto">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
               <h3 className="text-xl font-medium mb-4 text-white">Research-driven</h3>
-              <p className="text-gray-300">
+              <p className="text-white/70">
                 I ground my designs in thorough research and data analysis, ensuring solutions that address real user needs and business goals.
               </p>
             </div>
-            
-            <div className="bg-gray-800 p-6 rounded-lg shadow-sm">
+
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
               <h3 className="text-xl font-medium mb-4 text-white">User-centered</h3>
-              <p className="text-gray-300">
+              <p className="text-white/70">
                 Users are at the heart of my design process. I constantly test, iterate, and refine based on user feedback and behavior.
               </p>
             </div>
-            
-            <div className="bg-gray-800 p-6 rounded-lg shadow-sm">
+
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
               <h3 className="text-xl font-medium mb-4 text-white">Business-aligned</h3>
-              <p className="text-gray-300">
+              <p className="text-white/70">
                 Great design should drive business results. I focus on creating experiences that not only delight users but also achieve measurable outcomes.
               </p>
             </div>
@@ -107,12 +66,12 @@ const About = () => {
         </section>
         
         <section className="py-16 px-6 md:px-10 relative">
-          <h2 className="text-3xl font-semibold mb-8 text-white relative z-20">Skills & Expertise</h2>
+          <h2 className="text-3xl font-semibold mb-8 text-white relative z-20 max-w-7xl mx-auto">Skills & Expertise</h2>
 
-          <div className="grid md:grid-cols-2 gap-8 relative z-20">
-            <div>
+          <div className="grid md:grid-cols-2 gap-8 relative z-20 max-w-7xl mx-auto">
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
               <h3 className="text-xl font-medium mb-4 text-white">Design Skills</h3>
-              <ul className="space-y-2 text-white">
+              <ul className="space-y-2 text-white/80">
                 <li>User interface design</li>
                 <li>User experience design</li>
                 <li>Information architecture</li>
@@ -124,9 +83,9 @@ const About = () => {
               </ul>
             </div>
 
-            <div>
+            <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-8 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
               <h3 className="text-xl font-medium mb-4 text-white">Tools & Technologies</h3>
-              <ul className="space-y-2 text-white">
+              <ul className="space-y-2 text-white/80">
                 <li>Figma</li>
                 <li>Sketch</li>
                 <li>Adobe Creative Suite</li>

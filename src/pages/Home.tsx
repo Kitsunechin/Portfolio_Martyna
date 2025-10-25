@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Bubble from "@/components/ui/Bubble";
-import { ArrowDown, Star, Sparkles } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import projects from "@/data/projects";
-import ParallaxSection from "@/components/ui/ParallaxSection";
+import { SplashCursor } from "@/components/ui/splash-cursor";
 
 const AnimatedText = ({ text }: { text: string }) => {
   return (
@@ -45,6 +44,250 @@ const AnimatedSubtitle = () => {
   );
 };
 
+// Achievement Card Component
+const AchievementCard = ({
+  metric,
+  title,
+  description,
+  icon,
+  delay
+}: {
+  metric: string;
+  title: string;
+  description: string;
+  icon: string;
+  delay: number;
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => setIsVisible(true), delay);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+      style={{
+        boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)',
+        transition: 'all 0.3s ease'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 8px 32px rgba(221, 199, 255, 0.37)';
+        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(221, 199, 255, 0.15)';
+        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+      }}
+    >
+      <div className="absolute top-6 right-6 text-3xl opacity-30">{icon}</div>
+      <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">{metric}</div>
+      <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
+      <p className="text-base text-white/70 leading-relaxed">{description}</p>
+    </div>
+  );
+};
+
+// Achievement data
+const achievements = [
+  {
+    metric: "+19%",
+    icon: "✦",
+    title: "Shift Response Rate",
+    description: "Created a guided tour which boosted shift response rates"
+  },
+  {
+    metric: "20% → 32.9%",
+    icon: "✦",
+    title: "Application Success",
+    description: "Optimized job search with a radius filter"
+  },
+  {
+    metric: "-25%",
+    icon: "✦",
+    title: "Application Time",
+    description: "Introduced a commute-based selection map feature"
+  },
+  {
+    metric: "+16.5%",
+    icon: "✦",
+    title: "Feature Engagement",
+    description: "Designed badge system which drove more engagement"
+  },
+  {
+    metric: "40%",
+    icon: "✦",
+    title: "Completion Rate",
+    description: "Implemented shift ratings driving data-informed improvements"
+  },
+  {
+    metric: "71% & 61%",
+    icon: "✦",
+    title: "Market Adoption",
+    description: "Launched time-off system with high adoption in new and legacy markets"
+  },
+  {
+    metric: "+14%",
+    icon: "✦",
+    title: "Job Applications",
+    description: "Led to rise in job applications by aligning web and mobile experiences"
+  }
+];
+
+// ===================== SHADER BACKGROUND =====================
+function ShaderBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number>();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl') as WebGLRenderingContext | null;
+    if (!gl) {
+      console.error('WebGL not supported');
+      return;
+    }
+
+    // Vertex shader
+    const vertexShaderSource = `
+      attribute vec2 position;
+      void main() {
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
+
+    // Simplified fragment shader with animated gradient
+    const fragmentShaderSource = `
+      precision mediump float;
+      uniform float time;
+      uniform vec2 resolution;
+
+      void main() {
+        vec2 uv = gl_FragCoord.xy / resolution;
+
+        // Create animated waves
+        float wave1 = sin(uv.x * 3.0 + time * 0.5) * 0.5 + 0.5;
+        float wave2 = cos(uv.y * 4.0 + time * 0.3) * 0.5 + 0.5;
+        float wave3 = sin((uv.x + uv.y) * 2.0 + time * 0.4) * 0.5 + 0.5;
+
+        // Mix colors
+        vec3 color1 = vec3(0.2, 0.1, 0.4); // Dark purple
+        vec3 color2 = vec3(0.1, 0.3, 0.5); // Dark blue
+        vec3 color3 = vec3(0.3, 0.2, 0.5); // Purple-blue
+
+        vec3 finalColor = mix(color1, color2, wave1);
+        finalColor = mix(finalColor, color3, wave2 * wave3);
+
+        gl_FragColor = vec4(finalColor, 1.0);
+      }
+    `;
+
+    // Compile shaders
+    const compileShader = (source: string, type: number) => {
+      const shader = gl.createShader(type)!;
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    };
+
+    const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+    const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+
+    if (!vertexShader || !fragmentShader) return;
+
+    // Create program
+    const program = gl.createProgram()!;
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Program link error:', gl.getProgramInfoLog(program));
+      return;
+    }
+
+    gl.useProgram(program);
+
+    // Create buffer
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    const positionLocation = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    const timeLocation = gl.getUniformLocation(program, 'time');
+    const resolutionLocation = gl.getUniformLocation(program, 'resolution');
+
+    // Handle resize
+    const handleResize = () => {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    // Animation loop
+    const startTime = Date.now();
+    const animate = () => {
+      const time = (Date.now() - startTime) * 0.001;
+      gl.uniform1f(timeLocation, time);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }} aria-hidden="true">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full"
+        style={{ display: 'block' }}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+    </div>
+  );
+}
+
 const Home = () => {
   const featuredProjects = projects.filter(project => project.featured).slice(0, 2);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -83,76 +326,14 @@ const Home = () => {
 
   return (
     <>
+      <SplashCursor />
       <Header />
+      <ShaderBackground />
 
-      <main className="min-h-screen bg-gray-900 text-white">
-        <section className="relative min-h-[90vh] flex flex-col justify-center px-6 md:px-10 overflow-visible bg-gray-900">
-          <Bubble
-            color="green"
-            size="xl"
-            className="top-[25%] right-[8%] opacity-60"
-            animation="float-alt"
-          />
+      <main className="min-h-screen text-white relative">
+        <section className="relative min-h-[90vh] flex flex-col justify-center px-6 md:px-10 overflow-hidden">
 
-          <Bubble
-            color="yellow"
-            size="lg"
-            animation="float"
-            className="left-[5%] top-[35%] opacity-40"
-          />
-
-          <Bubble
-            color="green"
-            size="md"
-            animation="float-alt"
-            className="top-[65%] left-[25%] opacity-60"
-          />
-
-          <Bubble
-            color="yellow"
-            size="xl"
-            animation="float"
-            className="bottom-[15%] right-[25%] opacity-40"
-          />
-
-          <Bubble
-            color="green"
-            size="sm"
-            animation="float"
-            className="top-[15%] left-[15%] opacity-60"
-          />
-
-          <Bubble
-            color="yellow"
-            size="md"
-            animation="float-alt"
-            className="bottom-[25%] left-[2%] opacity-40"
-          />
-
-          <Bubble
-            color="yellow"
-            size="sm"
-            animation="float-alt"
-            className="top-[10%] right-[45%] opacity-40"
-          />
-
-          <Bubble
-            color="green"
-            size="md"
-            animation="float"
-            className="bottom-[5%] left-[40%] opacity-60"
-          />
-
-          <ParallaxSection speed={0.1} className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2">
-              <Sparkles className="h-8 w-8 text-bubble-yellow opacity-70" />
-            </div>
-            <div className="absolute bottom-1/3 left-1/4">
-              <Star className="h-6 w-6 text-bubble-green opacity-70" />
-            </div>
-          </ParallaxSection>
-
-          <div className="flex flex-col items-center text-center relative z-20">
+          <div className="flex flex-col items-center text-center relative" style={{ zIndex: 10 }}>
             {/* Container around the title section */}
             <div className="relative inline-block">
               {/* Align this span directly with the "M" of Martyna */}
@@ -175,7 +356,7 @@ const Home = () => {
               <br /> user experience, one pixel at a time.
             </p>
           </div>
-          <div className="flex flex-col items-center mt-20 relative z-20">
+          <div className="flex flex-col items-center mt-20 relative" style={{ zIndex: 10 }}>
             <div className="group mx-auto flex flex-col items-center gap-6">
               <Link to="/work" className="text-lg hover:text-[#DDC7FF] transition-colors">
                 See my projects
@@ -192,128 +373,32 @@ const Home = () => {
 
         </section>
 
-        <section ref={mainRef} className="py-24 px-6 md:px-10 bg-gray-900 text-white relative">
-          <h2 className="text-3xl font-bold mb-10 relative z-20">
+        <section ref={mainRef} className="py-24 px-6 md:px-10 text-white relative">
+          <h2 className="text-3xl font-bold mb-6 relative z-20">
             Impactful projects
           </h2>
 
-          <Bubble
-            color="yellow"
-            size="lg"
-            className="absolute top-[140%] right-[5%] opacity-40"
-            animation="float-alt"
-          />
-          <Bubble
-            color="green"
-            size="md"
-            className="absolute top-[125%] right-[25%] opacity-60"
-            animation="float-alt"
-          />
-          <Bubble
-            color="yellow"
-            size="sm"
-            className="absolute top-[15%] right-[35%] opacity-40"
-            animation="float-alt"
-          />
-          <Bubble
-            color="yellow"
-            size="md"
-            className="absolute top-[115%] left-[35%] opacity-40"
-            animation="float-alt"
-          />
-          <Bubble
-            color="green"
-            size="sm"
-            className="absolute top-[50%] left-[5%] opacity-60"
-            animation="float"
-          />
-          <Bubble
-            color="yellow"
-            size="lg"
-            className="absolute top-[80%] right-[15%] opacity-40"
-            animation="float-alt"
-          />
-
-          <div className="space-y-6 relative z-20">
-            <p className="text-lg max-w-3xl">
+          <div className="relative z-20">
+            <p className="text-lg max-w-3xl mb-12 text-white/80">
               As a marketplace product designer, I enhance user experiences to drive engagement and simplify job applications. Using data-driven design, I optimize features for efficiency, interaction, and measurable impact, including:
             </p>
 
-            <ul className="space-y-4 max-w-3xl list-none pl-0 text-lg">
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Created a guided tour which boosted <strong className="text-bubble-green opacity-80">shift response rates by 19%.</strong></span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Optimized job search with a radius filter, boosting application success from <strong className="text-bubble-green opacity-80">20% to 32.9%.</strong></span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Introduced a commute-based selection map feature which <strong className="text-bubble-green opacity-80">cut application time by 25%.</strong></span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Designed badge system which drove <strong className="text-bubble-green opacity-80">16.5% more engagement</strong> with key features.</span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Implemented shift ratings with a <strong className="text-bubble-green opacity-80">40% completion rate</strong>, driving data-informed product improvements.</span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Launched a time-off system with <strong className="text-bubble-green opacity-80">71% adoption in new markets and 61% in legacy markets</strong> improving scheduling efficiency.</span>
-              </li>
-
-              <li className="flex gap-3 items-baseline">
-                <Sparkles className="h-5 w-5 white flex-shrink-0" />
-                <span>Led to a <strong className="text-bubble-green opacity-80">14% rise in job applications</strong> by aligning web and mobile experiences.</span>
-              </li>
-            </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {achievements.map((achievement, index) => (
+                <AchievementCard
+                  key={index}
+                  metric={achievement.metric}
+                  title={achievement.title}
+                  description={achievement.description}
+                  icon={achievement.icon}
+                  delay={index * 100}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="py-16 px-6 md:px-10 bg-gray-800 relative">
-          <Bubble
-            color="green"
-            size="md"
-            className="absolute top-20 left-[20%] opacity-60"
-            animation="float"
-          />
-
-          <Bubble
-            color="yellow"
-            size="sm"
-            className="absolute bottom-10 left-[28%] opacity-40"
-            animation="float-alt"
-          />
-
-          <Bubble
-            color="yellow"
-            size="md"
-            className="absolute bottom-20 right-[20%] opacity-40"
-            animation="float"
-          />
-
-          <Bubble
-            color="green"
-            size="sm"
-            className="absolute top-60 left-[10%] opacity-60"
-            animation="float-alt"
-          />
-
-          <Bubble
-            color="yellow"
-            size="lg"
-            className="absolute bottom-32 right-[45%] opacity-40"
-            animation="float"
-          />
-
+        <section className="py-16 px-6 md:px-10 relative">
           <h2 className="text-3xl font-bold mb-12 relative inline-block z-20">
             Where I've worked
           </h2>
@@ -321,12 +406,14 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-10 relative z-20">
             <Link
               to="/work?company=jobtalent"
-              className="bg-gray-700 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group"
-
+              className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-2xl shadow-2xl hover:shadow-[0_8px_32px_0_rgba(221,199,255,0.37)] hover:bg-white/15 transition-all duration-300 relative overflow-hidden group"
+              style={{
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+              }}
             >
               <div className="relative z-10">
                 <h3 className="text-2xl font-semibold mb-4">Job&Talent</h3>
-                <div className="aspect-video bg-gray-700 rounded-lg mb-6 overflow-hidden">
+                <div className="aspect-video bg-white/5 backdrop-blur-sm rounded-lg mb-6 overflow-hidden border border-white/10">
                   <img
                     src="/lovable-uploads/Job.png"
                     alt="Job&Talent Workspace"
@@ -341,21 +428,18 @@ const Home = () => {
                   See my projects <ArrowDown className="ml-2 h-4 w-4 rotate-[-90deg]" />
                 </span>
               </div>
-
-              <Bubble
-                color="yellow"
-                size="lg"
-                className="top-[-40px] right-[-40px] opacity-20 -z-0"
-              />
             </Link>
 
             <Link
               to="/work?company=prograils"
-              className="bg-gray-700 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group"
+              className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-2xl shadow-2xl hover:shadow-[0_8px_32px_0_rgba(221,199,255,0.37)] hover:bg-white/15 transition-all duration-300 relative overflow-hidden group"
+              style={{
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+              }}
             >
               <div className="relative z-10">
                 <h3 className="text-2xl font-semibold mb-4">Prograils</h3>
-                <div className="aspect-video bg-gray-700 rounded-lg mb-6 overflow-hidden">
+                <div className="aspect-video bg-white/5 backdrop-blur-sm rounded-lg mb-6 overflow-hidden border border-white/10">
                   <img
                     src="/lovable-uploads/Prograils-7.png"
                     alt="Prograils Workspace"
@@ -370,12 +454,6 @@ const Home = () => {
                   See my projects <ArrowDown className="ml-2 h-4 w-4 rotate-[-90deg]" />
                 </span>
               </div>
-
-              <Bubble
-                color="green"
-                size="lg"
-                className="top-[-40px] right-[-40px] opacity-20 -z-0"
-              />
             </Link>
           </div>
         </section>

@@ -1,13 +1,15 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ShaderBackground from "@/components/ui/ShaderBackground";
 
 const CV = () => {
   return (
-    <div className="bg-[rgb(17,24,39)]">
+    <>
       <Header />
+      <ShaderBackground />
 
-      <main className="min-h-screen py-16 px-6 md:px-10 max-w-5xl mx-auto bg-[rgb(17,24,39)] border-l-[20px] border-r-[20px] border-[rgb(17,24,39)]">
+      <main className="min-h-screen py-16 px-6 md:px-10 max-w-5xl mx-auto relative">
         <h1 className="text-4xl font-bold mb-8 text-white">Martyna Bulska</h1>
         <h2 className="text-2xl font-medium text-gray-300 mb-6">Product Designer</h2>
 
@@ -202,7 +204,7 @@ const CV = () => {
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 };
 
