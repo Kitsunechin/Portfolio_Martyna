@@ -99,7 +99,7 @@ const Work = () => {
                     .map((project, index) => (
                       <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
                         <div className="w-full min-w-0">
-                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+                          <div className="backdrop-blur-2xl bg-white/20 border border-white/30 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
                               <div className="w-full min-w-[300px]">
                                 <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
@@ -112,12 +112,12 @@ const Work = () => {
                               </div>
                               <div className="w-full min-w-[300px] flex flex-col justify-start">
                                 <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-white leading-tight">{project.title}</h3>
-                                <p className="text-lg text-gray-300 mb-6 leading-relaxed">{project.shortDescription}</p>
+                                <p className="text-lg text-white mb-6 leading-relaxed">{project.shortDescription}</p>
                                 <div className="flex flex-wrap gap-2 mb-6">
                                   {project.tags.map((tag, tagIndex) => (
                                     <span
                                       key={tagIndex}
-                                      className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm transition-colors duration-300 hover:bg-gray-600 whitespace-nowrap"
+                                      className="px-3 py-1 backdrop-blur-xl bg-white/15 border border-white/20 text-white rounded-full text-sm transition-colors duration-300 hover:bg-white/25 whitespace-nowrap"
                                     >
                                       {tag}
                                     </span>
@@ -125,7 +125,7 @@ const Work = () => {
                                 </div>
                                 <a
                                   href={`/project/${project.slug}`}
-                                  className="inline-flex items-center text-[#DDC7FF] font-medium hover:underline transition-all duration-300 hover:text-white text-base"
+                                  className="inline-flex items-center text-[#DDC7FF] font-semibold hover:underline transition-all duration-300 hover:text-white text-base"
                                 >
                                   Case study →
                                 </a>
@@ -174,7 +174,7 @@ const Work = () => {
                     .map((project, index) => (
                       <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
                         <div className="w-full min-w-0">
-                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+                          <div className="backdrop-blur-2xl bg-white/20 border border-white/30 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/25 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
                               <div className="w-full min-w-[300px]">
                                 <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
@@ -187,12 +187,12 @@ const Work = () => {
                               </div>
                               <div className="w-full min-w-[300px] flex flex-col justify-start">
                                 <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-white leading-tight">{project.title}</h3>
-                                <p className="text-lg text-gray-300 mb-6 leading-relaxed">{project.shortDescription}</p>
+                                <p className="text-lg text-white mb-6 leading-relaxed">{project.shortDescription}</p>
                                 <div className="flex flex-wrap gap-2 mb-6">
                                   {project.tags.map((tag, tagIndex) => (
                                     <span
                                       key={tagIndex}
-                                      className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm transition-colors duration-300 hover:bg-gray-600 whitespace-nowrap"
+                                      className="px-3 py-1 backdrop-blur-xl bg-white/15 border border-white/20 text-white rounded-full text-sm transition-colors duration-300 hover:bg-white/25 whitespace-nowrap"
                                     >
                                       {tag}
                                     </span>
@@ -200,7 +200,7 @@ const Work = () => {
                                 </div>
                                 <a
                                   href={`/project/${project.slug}`}
-                                  className="inline-flex items-center text-[#DDC7FF] font-medium hover:underline transition-all duration-300 hover:text-white text-base"
+                                  className="inline-flex items-center text-[#DDC7FF] font-semibold hover:underline transition-all duration-300 hover:text-white text-base"
                                 >
                                   Case study →
                                 </a>
