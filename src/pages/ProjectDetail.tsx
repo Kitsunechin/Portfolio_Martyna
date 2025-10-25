@@ -6,6 +6,7 @@ import ProjectHeader from "@/components/projects/ProjectHeader";
 import ProjectSection from "@/components/projects/ProjectSection";
 import ImageShowcase from "@/components/projects/ImageShowcase";
 import PasswordProtect from "@/components/ui/PasswordProtect";
+import ShaderBackground from "@/components/ui/ShaderBackground";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import projects, { Project } from "@/data/projects";
 import { checkAuthState, storeAuthState } from "@/utils/auth";
@@ -44,8 +45,9 @@ const ProjectDetail = () => {
   return (
     <>
       <Header />
+      <ShaderBackground />
 
-      <main className="min-h-screen bg-[rgb(30,41,59)]">
+      <main className="min-h-screen relative">
         <ProjectHeader
           title={project.title}
           description={project.fullDescription}
@@ -123,7 +125,7 @@ const ProjectDetail = () => {
                 <p className="text-lg mb-6 text-white">{project.impact}</p>
 
 {project.kpis && project.slug !== 'productivity-fill-rate' && (
-                  <div className="bg-gray-800 p-6 rounded-lg">
+                  <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-lg shadow-2xl" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                     <h3 className="font-medium mb-4 text-white">Key performance indicators</h3>
                     <div className="space-y-4">
                       {project.kpis.map((kpi, index) => (
@@ -180,7 +182,7 @@ const ProjectDetail = () => {
                 {project.prototypeUrl && (
                   <div className="mt-12">
                     <h3 className="text-lg font-medium mb-4 text-white">View interactive prototype</h3>
-                    <div className="bg-gray-800 p-6 rounded-lg flex items-center justify-between">
+                    <div className="backdrop-blur-xl bg-white/10 border border-white/20 p-6 rounded-lg flex items-center justify-between shadow-2xl" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                       <div>
                         <p className="text-white mb-2 font-medium">Explore the design prototype</p>
                         <p className="text-gray-300 text-sm">Interact with the live prototype to see the design in action</p>

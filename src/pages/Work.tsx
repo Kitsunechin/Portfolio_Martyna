@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import ProjectCard from "@/components/projects/ProjectCard";
 import projects from "@/data/projects";
 import companies from "@/data/companies";
-import Bubble from "@/components/ui/Bubble";
+import ShaderBackground from "@/components/ui/ShaderBackground";
 import { ChevronDown } from "lucide-react";
 import { StackingCards, StackingCardItem } from "@/components/ui/stacking-cards-framer";
 
@@ -36,20 +36,11 @@ const Work = () => {
   return (
     <>
       <Header />
-      
-      <main className="min-h-screen bg-gray-900">
+      <ShaderBackground />
+
+      <main className="min-h-screen relative">
         {/* Hero section */}
-        <section className="py-8 bg-gray-900 relative">
-          <Bubble 
-            color="yellow" 
-            size="lg"
-            className="top-20 right-[10%] -z-50"
-          />
-          <Bubble 
-            color="green" 
-            size="md"
-            className="top-10 right-[60%] -z-50"
-          />
+        <section className="py-8 relative z-10">
           <div className="max-w-7xl mx-auto px-6 md:px-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in text-white">
               Work
@@ -80,25 +71,14 @@ const Work = () => {
             </button>
             </div>
           </div>
-          
-          <Bubble 
-            color="green" 
-            size="lg"
-            className="bottom-[-40px] left-[50%] opacity-30 -z-50"
-          />
-          <Bubble 
-            color="yellow" 
-            size="md"
-            className="bottom-[-40px] left-[70%] opacity-30 -z-50"
-          />
         </section>
 
         {/* Always show Job&Talent section when filter is all or jobtalent */}
         {(filter === "all" || filter === "jobtalent") && (
-          <section className="py-8 bg-gray-900">
+          <section className="py-8 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
               {/* Header card for Job&Talent */}
-              <div className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 mb-10 p-6 sm:p-8 lg:p-10">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                 <div className="text-center">
                   <span className="text-sm font-medium text-[#DDC7FF] uppercase tracking-wider">UX/UI DESIGN</span>
                   <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Job&Talent</h2>
@@ -119,7 +99,7 @@ const Work = () => {
                     .map((project, index) => (
                       <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
                         <div className="w-full min-w-0">
-                          <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10">
+                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
                               <div className="w-full min-w-[300px]">
                                 <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
@@ -170,10 +150,10 @@ const Work = () => {
 
         {/* Always show Prograils section when filter is all or prograils */}
         {(filter === "all" || filter === "prograils") && (
-          <section className="py-8 bg-gray-900">
+          <section className="py-8 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
               {/* Header card for Prograils */}
-              <div className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 mb-10 p-6 sm:p-8 lg:p-10">
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                 <div className="text-center">
                   <span className="text-sm font-medium text-[#DDC7FF] uppercase tracking-wider">UX/UI DESIGN</span>
                   <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Prograils</h2>
@@ -194,7 +174,7 @@ const Work = () => {
                     .map((project, index) => (
                       <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
                         <div className="w-full min-w-0">
-                          <div className="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10">
+                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
                               <div className="w-full min-w-[300px]">
                                 <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
