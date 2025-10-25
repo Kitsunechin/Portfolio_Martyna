@@ -58,37 +58,11 @@ const AchievementCard = ({
   icon: string;
   delay: number;
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => setIsVisible(true), delay);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [delay]);
-
   return (
     <div
-      ref={cardRef}
-      className={`backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden group"
       style={{
-        boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)',
-        transition: 'all 0.3s ease'
+        boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)'
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.boxShadow = '0 8px 32px rgba(221, 199, 255, 0.37)';
@@ -99,7 +73,6 @@ const AchievementCard = ({
         e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
       }}
     >
-      <div className="absolute top-6 right-6 text-3xl opacity-30">{icon}</div>
       <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">{metric}</div>
       <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
       <p className="text-base text-white/70 leading-relaxed">{description}</p>
