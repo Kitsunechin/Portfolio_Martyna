@@ -153,11 +153,11 @@ const Work = () => {
           <section className="py-8 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
               {/* Header card for Prograils */}
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+              <div className="backdrop-blur-xl bg-[#41336C]/85 border border-white/20 rounded-2xl shadow-2xl hover:bg-[#41336C]/90 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                 <div className="text-center">
                   <span className="text-sm font-medium text-[#DDC7FF] uppercase tracking-wider">UX/UI DESIGN</span>
                   <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Prograils</h2>
-                  <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                  <p className="text-xl text-white/90 max-w-2xl mx-auto">
                     {companies.find(c => c.id === "prograils")?.longDescription}
                   </p>
                 </div>
