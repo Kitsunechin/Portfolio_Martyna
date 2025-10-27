@@ -185,6 +185,9 @@ const CV = () => {
                 <li>Figma</li>
                 <li>Framer</li>
                 <li>Photoshop</li>
+                <li>Claude Code</li>
+                <li>V0</li>
+                <li>Lovable</li>
               </ul>
             </section>
           </div>
