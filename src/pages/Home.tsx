@@ -60,17 +60,9 @@ const AchievementCard = ({
 }) => {
   return (
     <div
-      className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden group"
+      className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden"
       style={{
         boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)'
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.boxShadow = '0 8px 32px rgba(221, 199, 255, 0.37)';
-        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(221, 199, 255, 0.15)';
-        e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
       }}
     >
       <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">{metric}</div>
