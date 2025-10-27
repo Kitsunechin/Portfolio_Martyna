@@ -93,6 +93,10 @@ const About = () => {
                 <li>Prototyping tools</li>
                 <li>User testing platforms</li>
                 <li>Analytics tools</li>
+                <li>Claude Code</li>
+                <li>V0</li>
+                <li>Lovable</li>
+                <li>Cursor</li>
               </ul>
             </div>
           </div>

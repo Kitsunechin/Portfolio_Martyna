@@ -1,11 +1,24 @@
-
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
-  
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show glassmorphism after scrolling 100px
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="py-6 px-6 md:px-10 w-full flex justify-between items-center backdrop-blur-xl bg-black/30 border-b border-white/10 sticky top-0 z-50">
+    <header className={`py-6 px-6 md:px-10 w-full flex justify-between items-center sticky top-0 z-50 transition-all duration-300 ${
+      isScrolled ? "backdrop-blur-xl bg-white/10 border-b border-white/20" : ""
+    }`}>
       <Link to="/" className="font-medium text-lg text-white">Martyna Bulska</Link>
       <nav className="flex items-center gap-6">
         <Link 
