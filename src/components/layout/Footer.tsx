@@ -1,5 +1,5 @@
 
-import { Mail, Linkedin, ArrowUp } from "lucide-react";
+import { Mail, Linkedin, Github, ArrowUp } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
