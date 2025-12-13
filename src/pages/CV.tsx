@@ -1,9 +1,13 @@
-
+import { useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ShaderBackground from "@/components/ui/ShaderBackground";
 
 const CV = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Header />

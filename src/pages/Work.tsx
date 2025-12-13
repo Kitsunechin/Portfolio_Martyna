@@ -78,7 +78,7 @@ const Work = () => {
           <section className="py-8 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
               {/* Header card for Job&Talent */}
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                 <div className="text-center">
                   <span className="text-sm font-medium text-[#DDC7FF] uppercase tracking-wider">UX/UI DESIGN</span>
                   <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Job&Talent</h2>
@@ -96,45 +96,48 @@ const Work = () => {
                 >
                   {projects
                     .filter(project => project.company === "jobtalent")
-                    .map((project, index) => (
-                      <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
-                        <div className="w-full min-w-0">
-                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
-                              <div className="w-full min-w-[300px]">
-                                <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
-                                  <img
-                                    src={project.imageSrc}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                  />
-                                </a>
-                              </div>
-                              <div className="w-full min-w-[300px] flex flex-col justify-start">
-                                <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-white leading-tight">{project.title}</h3>
-                                <p className="text-lg text-gray-300 mb-6 leading-relaxed">{project.shortDescription}</p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                  {project.tags.map((tag, tagIndex) => (
-                                    <span
-                                      key={tagIndex}
-                                      className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm transition-colors duration-300 hover:bg-gray-600 whitespace-nowrap"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
+                    .map((project, index, arr) => {
+                      const isLastCard = index === arr.length - 1;
+                      return (
+                        <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
+                          <div className="w-full min-w-0">
+                            <div className="backdrop-blur-2xl rounded-2xl shadow-2xl transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10 border border-white/40 bg-gradient-to-br from-indigo-950/40 via-purple-950/40 to-blue-950/40 hover:from-indigo-950/40 hover:via-purple-950/40 hover:to-blue-950/40 overflow-hidden" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                                <div className="w-full min-w-[300px] rounded-2xl overflow-hidden">
+                                  <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 group min-h-[200px] cursor-pointer overflow-hidden">
+                                    <img
+                                      src={project.imageSrc}
+                                      alt={project.title}
+                                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                  </a>
                                 </div>
-                                <a
-                                  href={`/project/${project.slug}`}
-                                  className="inline-flex items-center text-[#DDC7FF] font-medium hover:underline transition-all duration-300 hover:text-white text-base"
-                                >
-                                  Case study →
-                                </a>
+                                <div className="w-full min-w-[300px] flex flex-col justify-start">
+                                  <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-white leading-tight">{project.title}</h3>
+                                  <p className="text-lg text-gray-300 mb-6 leading-relaxed">{project.shortDescription}</p>
+                                  <div className="flex flex-wrap gap-2 mb-6">
+                                    {project.tags.map((tag, tagIndex) => (
+                                      <span
+                                        key={tagIndex}
+                                        className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm transition-colors duration-300 hover:bg-gray-600 whitespace-nowrap"
+                                      >
+                                        {tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  <a
+                                    href={`/project/${project.slug}`}
+                                    className="inline-flex items-center text-[#DDC7FF] font-medium hover:underline transition-all duration-300 hover:text-white text-base"
+                                  >
+                                    Case study →
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </StackingCardItem>
-                    ))}
+                        </StackingCardItem>
+                      );
+                    })}
                 </StackingCards>
               </div>
             </div>
@@ -153,7 +156,7 @@ const Work = () => {
           <section className="py-8 relative z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
               {/* Header card for Prograils */}
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl hover:bg-white/15 transition-all duration-300 mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+              <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl mb-10 p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                 <div className="text-center">
                   <span className="text-sm font-medium text-[#DDC7FF] uppercase tracking-wider">UX/UI DESIGN</span>
                   <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white">Prograils</h2>
@@ -174,10 +177,10 @@ const Work = () => {
                     .map((project, index) => (
                       <StackingCardItem key={project.id} index={index} className="h-[800px] w-full">
                         <div className="w-full min-w-0">
-                          <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
+                          <div className="backdrop-blur-2xl bg-gradient-to-br from-indigo-950/40 via-purple-950/40 to-blue-950/40 border border-white/40 rounded-2xl shadow-2xl hover:from-indigo-950/40 hover:via-purple-950/40 hover:to-blue-950/40 transition-all duration-500 hover:scale-[1.02] p-6 sm:p-8 lg:p-10 overflow-hidden" style={{ boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)' }}>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
-                              <div className="w-full min-w-[300px]">
-                                <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 rounded-2xl overflow-hidden group min-h-[200px] cursor-pointer">
+                              <div className="w-full min-w-[300px] rounded-2xl overflow-hidden">
+                                <a href={`/project/${project.slug}`} className="block aspect-video bg-gray-800 group min-h-[200px] cursor-pointer overflow-hidden">
                                   <img
                                     src={project.imageSrc}
                                     alt={project.title}
