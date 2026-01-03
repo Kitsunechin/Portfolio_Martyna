@@ -94,49 +94,6 @@ const CV = () => {
                     </div>
                   </div>
                 </div>
-                
-                <div>
-                  <div className="flex justify-between items-start mb-1">
-                    <div>
-                      <h4 className="font-bold text-white">KennedyFitch, Switzerland - Zurich</h4>
-                      <p className="text-gray-300">
-                        KennedyFitch is an HR consulting firm specializing in executive search for innovation.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="flex justify-between mb-2">
-                      <h5 className="font-semibold text-white">Research Manager</h5>
-                      <span className="text-gray-300">Sept 2017 - June 2021</span>
-                    </div>
-                    <ul className="list-disc pl-6 space-y-2 text-white">
-                      <li>Led a team to identify and secure top executive talent, providing market insights and high-quality reporting to support clients' leadership needs.</li>
-                      <li>Specialized in sourcing and attracting senior executives to meet organizations' strategic leadership goals.</li>
-                      <li>Drove efficiencies in company trends, market trends, and talent data.</li>
-                      <li>Managed a team, played intelligence and talent mapping, ensuring clients received high-quality reporting and access to the best executive candidates.</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="flex justify-between items-start mb-1">
-                    <div>
-                      <h4 className="font-bold text-white">McKinsey, United Kingdom - London</h4>
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="flex justify-between mb-2">
-                      <h5 className="font-semibold text-white">Junior Talent Research Analyst</h5>
-                      <span className="text-gray-300">Sept 2014 - July 2017</span>
-                    </div>
-                    <ul className="list-disc pl-6 space-y-2 text-white">
-                      <li>Conducted in-depth research and analysis to identify potential executive candidates across various industries and disciplines.</li>
-                      <li>Provided operational candidate support to streamline team processes and enhance talent acquisition strategies.</li>
-                    </ul>
-                  </div>
-                </div>
               </div>
             </section>
           </div>
@@ -199,7 +156,7 @@ const CV = () => {
         
         <div className="mt-10 flex justify-between items-center">
           <div>
-            <p className="text-gray-300">martyna.bulska@gmail.com • +48-555-1234567</p>
+            <p className="text-gray-300">martyna.bulska@gmail.com • +48 604-510-172</p>
           </div>
           <div className="text-right">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
