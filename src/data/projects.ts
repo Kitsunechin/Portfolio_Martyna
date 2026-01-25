@@ -255,7 +255,7 @@ const projects: Project[] = [
         description: "90% of new and existing users engaged with the onboarding tour"
       },
       {
-        metric: "Tour completion rate",
+        metric: "Response rate",
         percentage: 80,
         description: "the response rate to assigned shifts increased from 73% to a steady 80%."
       }

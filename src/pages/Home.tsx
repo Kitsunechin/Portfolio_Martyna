@@ -6,6 +6,39 @@ import { ArrowDown } from "lucide-react";
 import projects from "@/data/projects";
 import { SplashCursor } from "@/components/ui/splash-cursor";
 
+// Custom hook for counting animation
+const useCountAnimation = (end: number, duration: number = 2000, isInView: boolean = false) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    let startTime: number | null = null;
+    const startValue = 0;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = startValue + (end - startValue) * easeOutQuart;
+
+      setCount(Math.floor(currentCount));
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [end, duration, isInView]);
+
+  return count;
+};
+
 const AnimatedText = ({ text }: { text: string }) => {
   return (
     <span className="text-white text-7xl md:text-9xl">{text}</span>
@@ -58,14 +91,85 @@ const AchievementCard = ({
   icon: string;
   delay: number;
 }) => {
+  const [isInView, setIsInView] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [animatedMetric, setAnimatedMetric] = useState(metric);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    // Extract all numbers from the metric string
+    const numberMatches = metric.match(/\d+\.?\d*/g);
+    if (!numberMatches) return;
+
+    const numbers = numberMatches.map(n => parseFloat(n));
+    const duration = 3000; // Increased from 2000ms to 3000ms for slower animation
+    let startTime: number | null = null;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // Smoother easing function (easeOutCubic for more gentle deceleration)
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+
+      let result = metric;
+      numberMatches.forEach((numStr, index) => {
+        const targetNum = numbers[index];
+        const currentNum = targetNum * easeOutCubic;
+
+        // Preserve decimal places if original had them
+        const hasDecimal = numStr.includes('.');
+        const formattedNum = hasDecimal ? currentNum.toFixed(1) : Math.floor(currentNum).toString();
+
+        // Replace this occurrence
+        result = result.replace(numStr, formattedNum);
+      });
+
+      setAnimatedMetric(result);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setAnimatedMetric(metric);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isInView, metric]);
+
   return (
     <div
+      ref={cardRef}
       className="backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden"
       style={{
         boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)'
       }}
     >
-      <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">{metric}</div>
+      <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">
+        {animatedMetric}
+      </div>
       <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
       <p className="text-base text-white/70 leading-relaxed">{description}</p>
     </div>

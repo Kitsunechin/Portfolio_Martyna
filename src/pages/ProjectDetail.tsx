@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -12,17 +12,137 @@ import projects, { Project } from "@/data/projects";
 import { checkAuthState, storeAuthState } from "@/utils/auth";
 import { Button } from "@/components/ui/button";
 
+// Animated KPI Component
+const AnimatedKPI = ({ kpi, index, projectSlug }: { kpi: { metric: string; percentage: number; description: string }; index: number; projectSlug: string }) => {
+  const [isInView, setIsInView] = useState(false);
+  const [animatedPercentage, setAnimatedPercentage] = useState(0);
+  const kpiRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+
+  // Reset animation when project changes
+  useEffect(() => {
+    setIsInView(false);
+    setAnimatedPercentage(0);
+  }, [projectSlug]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+          // Reset when out of view so it can animate again if scrolled back
+          setIsInView(false);
+          setAnimatedPercentage(0);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (kpiRef.current) {
+      observer.observe(kpiRef.current);
+    }
+
+    return () => {
+      if (kpiRef.current) {
+        observer.unobserve(kpiRef.current);
+      }
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+      return;
+    }
+
+    const duration = 3000;
+    const staggerDelay = index * 200; // 200ms delay between each KPI
+    let startTime: number | null = null;
+    let delayComplete = false;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+
+      // Handle stagger delay
+      if (!delayComplete) {
+        if (elapsed < staggerDelay) {
+          setAnimatedPercentage(0); // Keep at 0 during delay
+          animationRef.current = requestAnimationFrame(animate);
+          return;
+        }
+        delayComplete = true;
+        startTime = currentTime;
+      }
+
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // Smoother easing function (easeOutCubic for more gentle deceleration)
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      const currentPercentage = kpi.percentage * easeOutCubic;
+
+      setAnimatedPercentage(currentPercentage);
+
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        setAnimatedPercentage(kpi.percentage);
+        animationRef.current = null;
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    };
+  }, [isInView, kpi.percentage, index]);
+
+  return (
+    <div ref={kpiRef}>
+      <p className="font-medium text-white">{kpi.metric}</p>
+      <div className="h-4 bg-gray-700 rounded-full mt-2 overflow-hidden">
+        <div
+          className="h-4 bg-[#DDC7FF] rounded-full"
+          style={{
+            width: `${animatedPercentage}%`
+          }}
+        />
+      </div>
+      <div className="flex justify-between text-sm mt-1 text-gray-300">
+        <span>0%</span>
+        <span>{Math.round(animatedPercentage)}%</span>
+      </div>
+      <p className="text-sm text-gray-300 mt-1">{kpi.description}</p>
+    </div>
+  );
+};
+
 const ProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const projectIndex = projects.findIndex(p => p.slug === slug);
   const prevProject = projectIndex > 0 ? projects[projectIndex - 1] : null;
   const nextProject = projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
 
   useEffect(() => {
+    // Reset loading state when slug changes
+    setIsLoaded(false);
+
     const foundProject = projects.find(p => p.slug === slug);
 
     if (!foundProject) {
@@ -32,7 +152,13 @@ const ProjectDetail = () => {
 
     setProject(foundProject);
     setIsAuthenticated(checkAuthState());
-    window.scrollTo(0, 0);
+
+    // Add a small delay to ensure background is rendered
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [slug, navigate]);
 
   const handleUnlock = () => {
@@ -47,7 +173,7 @@ const ProjectDetail = () => {
       <Header />
       <ShaderBackground />
 
-      <main className="min-h-screen relative">
+      <main className={`min-h-screen relative transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <ProjectHeader
           title={project.title}
           description={project.fullDescription}
@@ -129,20 +255,7 @@ const ProjectDetail = () => {
                     <h3 className="font-medium mb-4 text-white">Key performance indicators</h3>
                     <div className="space-y-4">
                       {project.kpis.map((kpi, index) => (
-                        <div key={index}>
-                          <p className="font-medium text-white">{kpi.metric}</p>
-                          <div className="h-4 bg-gray-700 rounded-full mt-2">
-                            <div
-                              className="h-4 bg-[#DDC7FF] rounded-full"
-                              style={{ width: `${kpi.percentage}%` }}
-                            />
-                          </div>
-                          <div className="flex justify-between text-sm mt-1 text-gray-300">
-                            <span>0%</span>
-                            <span>{kpi.percentage}%</span>
-                          </div>
-                          <p className="text-sm text-gray-300 mt-1">{kpi.description}</p>
-                        </div>
+                        <AnimatedKPI key={index} kpi={kpi} index={index} projectSlug={project.slug} />
                       ))}
                     </div>
                   </div>
