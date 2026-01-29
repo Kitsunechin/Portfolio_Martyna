@@ -212,7 +212,7 @@ const achievements = [
     projectSlug: "guided-tour"
   },
   {
-    metric: "60",
+    metric: "60%",
     icon: "✦",
     title: "Fullfillment Rate",
     description: "Optimized job applications with AI Clara recruiter",
