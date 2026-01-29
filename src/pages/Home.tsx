@@ -185,23 +185,16 @@ const achievements = [
     description: "Created a guided tour which boosted shift response rates"
   },
   {
-    metric: "20% → 32.9%",
+    metric: "60",
     icon: "✦",
-    title: "Application Success",
-    description: "Optimized job search with a radius filter"
+    title: "Fullfillment Rate",
+    description: "Optimized job applications with AI Clara recruiter"
   },
   {
-    metric: "-25%",
+    metric: "30%",
     icon: "✦",
-    title: "Application Time",
-    description: "Introduced a commute-based selection map feature"
-  },
-  {
-    metric: "+16.5%",
-    icon: "✦",
-    title: "Feature Engagement",
-    description: "Designed badge system which drove more engagement"
-  },
+    title: "Productivity rollout",
+    description: "Successfully rolled out productivity features across markets"  },
   {
     metric: "40%",
     icon: "✦",
@@ -449,7 +442,7 @@ const Home = () => {
 
           <div className="relative z-20">
             <p className="text-lg max-w-3xl mb-12 text-white/80">
-              As a marketplace product designer, I enhance user experiences to drive engagement and simplify job applications. Using data-driven design, I optimize features for efficiency, interaction, and measurable impact, including:
+              As a product designer, I enhance user experiences to drive engagement and simplify job applications. Using data-driven design, I optimize features for efficiency, interaction, and measurable impact, including:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
