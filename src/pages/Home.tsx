@@ -83,13 +83,15 @@ const AchievementCard = ({
   title,
   description,
   icon,
-  delay
+  delay,
+  projectSlug
 }: {
   metric: string;
   title: string;
   description: string;
   icon: string;
   delay: number;
+  projectSlug?: string;
 }) => {
   const [isInView, setIsInView] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -159,6 +161,34 @@ const AchievementCard = ({
     requestAnimationFrame(animate);
   }, [isInView, metric]);
 
+  const cardContent = (
+    <>
+      <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">
+        {animatedMetric}
+      </div>
+      <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
+      <p className="text-base text-white/70 leading-relaxed">{description}</p>
+    </>
+  );
+
+  if (projectSlug) {
+    return (
+      <Link
+        to={`/project/${projectSlug}`}
+        ref={cardRef}
+        className="block backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl p-8 relative overflow-hidden transition-all duration-300 ease-out hover:scale-105 hover:bg-white/10 hover:border-white/30 active:scale-95 cursor-pointer group"
+        style={{
+          boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)'
+        }}
+      >
+        {cardContent}
+        <div className="absolute top-4 right-4 text-white/40 group-hover:text-white/70 transition-colors">
+          →
+        </div>
+      </Link>
+    );
+  }
+
   return (
     <div
       ref={cardRef}
@@ -167,11 +197,7 @@ const AchievementCard = ({
         boxShadow: '0 8px 32px 0 rgba(221, 199, 255, 0.15)'
       }}
     >
-      <div className="text-5xl md:text-6xl font-bold text-[#DDC7FF] mb-4">
-        {animatedMetric}
-      </div>
-      <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-      <p className="text-base text-white/70 leading-relaxed">{description}</p>
+      {cardContent}
     </div>
   );
 };
@@ -182,36 +208,43 @@ const achievements = [
     metric: "+19%",
     icon: "✦",
     title: "Shift Response Rate",
-    description: "Created a guided tour which boosted shift response rates"
+    description: "Created a guided tour which boosted shift response rates",
+    projectSlug: "guided-tour"
   },
   {
     metric: "60",
     icon: "✦",
     title: "Fullfillment Rate",
-    description: "Optimized job applications with AI Clara recruiter"
+    description: "Optimized job applications with AI Clara recruiter",
+    projectSlug: "ai-recruiter"
   },
   {
     metric: "30%",
     icon: "✦",
     title: "Productivity rollout",
-    description: "Successfully rolled out productivity features across markets"  },
+    description: "Successfully rolled out productivity features across markets",
+    projectSlug: "productivity-fill-rate"
+  },
   {
     metric: "40%",
     icon: "✦",
     title: "Completion Rate",
-    description: "Implemented shift ratings driving data-informed improvements"
+    description: "Implemented shift ratings driving data-informed improvements",
+    projectSlug: "shift-satisfaction"
   },
   {
     metric: "71% & 61%",
     icon: "✦",
     title: "Market Adoption",
-    description: "Launched time-off system with high adoption in new and legacy markets"
+    description: "Launched time-off system with high adoption in new and legacy markets",
+    projectSlug: "time-off"
   },
   {
     metric: "+14%",
     icon: "✦",
     title: "Job Applications",
-    description: "Led to rise in job applications by aligning web and mobile experiences"
+    description: "Led to rise in job applications by aligning web and mobile experiences",
+    projectSlug: "web-redesign"
   }
 ];
 
@@ -454,6 +487,7 @@ const Home = () => {
                   description={achievement.description}
                   icon={achievement.icon}
                   delay={index * 100}
+                  projectSlug={achievement.projectSlug}
                 />
               ))}
             </div>
