@@ -221,7 +221,7 @@ const achievements = [
   {
     metric: "30%",
     icon: "✦",
-    title: "Productivity rollout",
+    title: "Productivity Rollout",
     description: "Successfully rolled out productivity features across markets",
     projectSlug: "productivity-fill-rate"
   },
